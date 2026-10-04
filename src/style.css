@@ -1,3 +1,48 @@
 body {
-  background-color: gray;
+  background-color: rgba(1, 70, 58, 0.384);
+}
+
+form,
+div {
+  color: gray;
+  background-color: rgb(8, 202, 202);
+  border: 3px solid gray;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 25px;
+  margin-top: 5px;
+}
+
+select {
+  color: gray;
+  height: 30px;
+}
+
+button {
+  color: gray;
+  background-color: rgb(229, 233, 233);
+  border: 2px solid gray;
+  border-radius: 5px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+}
+
+button:hover {
+  background-color: rgb(128, 128, 128);
+  color: white;
+  border: 2px solid white;
 }

@@ -42,7 +42,7 @@ let defaultProject = {
 defaultProject.todos.push(newTodo);
 const projects = [defaultProject];
 
-function insertProject(name) {
+function addProject(name) {
   const main = document.querySelector(`main`);
   const projectDivContainer = document.createElement("div");
   const projectHeader = document.createElement(`h2`);
@@ -56,4 +56,66 @@ function insertProject(name) {
 
   main.appendChild(projectDivContainer);
 }
-insertProject(`House chores`);
+function createProjectForm() {
+  const form = document.createElement(`form`);
+  const projectNameLabel = document.createElement("label");
+  const projectName = document.createElement("input");
+  const createBtn = document.createElement("button");
+
+  projectNameLabel.innerText = `Create a new project:`;
+  createBtn.innerText = `Create`;
+
+  form.appendChild(projectNameLabel);
+  form.appendChild(projectName);
+  form.appendChild(createBtn);
+  main.appendChild(form);
+}
+
+function createTodoForm() {
+  const form = document.createElement(`form`);
+  const inputTitle = document.createElement("input");
+  const inputDescription = document.createElement("input");
+  const inputDueDate = document.createElement("input");
+
+  const selectPriority = document.createElement("select");
+  const optionHigh = document.createElement(`option`);
+  const optionMedium = document.createElement(`option`);
+  const optionLow = document.createElement(`option`);
+
+  const inputTitleLabel = document.createElement("label");
+  const inputDescriptionLabel = document.createElement("label");
+  const inputDueDateLabel = document.createElement("label");
+  const selectPriorityLabel = document.createElement("label");
+  const addBtn = document.createElement("button");
+
+  inputTitleLabel.innerText = `Title`;
+  inputDescriptionLabel.innerText = `Description`;
+  inputDueDateLabel.innerText = `Due Date`;
+  selectPriorityLabel.innerText = `Priority`;
+  optionHigh.value = `high`;
+  optionHigh.innerText = `high`;
+  optionMedium.value = `medium`;
+  optionMedium.innerText = `medium`;
+  optionLow.value = `low`;
+  optionLow.innerText = `low`;
+
+  addBtn.innerText = `Add`;
+
+  selectPriority.appendChild(optionHigh);
+  selectPriority.appendChild(optionMedium);
+  selectPriority.appendChild(optionLow);
+  form.appendChild(inputTitleLabel);
+  form.appendChild(inputTitle);
+  form.appendChild(inputDescriptionLabel);
+  form.appendChild(inputDescription);
+  form.appendChild(inputDueDateLabel);
+  form.appendChild(inputDueDate);
+  form.appendChild(selectPriorityLabel);
+  form.appendChild(selectPriority);
+  form.appendChild(addBtn);
+  main.appendChild(form);
+}
+
+createProjectForm();
+createTodoForm();
+addProject(`House chores`);
