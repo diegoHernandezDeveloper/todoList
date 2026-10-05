@@ -11,6 +11,8 @@ function createProjectForm() {
   createBtn.addEventListener(`click`, (e) => {
     e.preventDefault();
     addProject();
+
+    refrestSelect();
   });
 
   form.append(projectNameLabel, projectNameinput, createBtn);
@@ -68,6 +70,16 @@ function createTodoForm() {
     );
 
     main.appendChild(form);
+  }
+}
+
+function refrestSelect() {
+  const select = document.querySelector(`select[selectprojects]`);
+  select.replaceChildren();
+  for (let project of projects) {
+    let option = completeElement(`option`, `${project.projectName}`);
+    option.value = project.projectName;
+    select.append(option);
   }
 }
 
