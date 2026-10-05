@@ -17,6 +17,7 @@
 // remember local storage uses JSON, Keep in mind you cannot store functions in JSON, so you’ll have to figure out how to add methods back to your object properties once you fetch them
 
 import "./style.css";
+import { createProjectForm, createTodoForm } from "./formsCreation.js";
 const main = document.querySelector(`main`);
 
 class Todo {
@@ -28,94 +29,83 @@ class Todo {
   }
 }
 
-const newTodo = new Todo(
-  `do the dishes`,
-  `I have to do the dishes before the wife comes home!!`,
-  `today`,
-  `important`,
-);
-
 let defaultProject = {
   projectName: `default`,
-  todos: [],
+  todos: [
+    {
+      title: `do the dishhes`,
+      description: `before wife comes`,
+      dueDate: `today`,
+      priority: `high`,
+    },
+  ],
 };
-defaultProject.todos.push(newTodo);
+
 const projects = [defaultProject];
 
-function addProject(name) {
-  const main = document.querySelector(`main`);
-  const projectDivContainer = document.createElement("div");
-  const projectHeader = document.createElement(`h2`);
-  const ulproject = document.createElement("ul");
-
-  projectHeader.innerText = name;
-  projectDivContainer.setAttribute(`project`, `"${name}"`);
-
-  projectDivContainer.appendChild(projectHeader);
-  projectDivContainer.appendChild(ulproject);
-
-  main.appendChild(projectDivContainer);
-}
-function createProjectForm() {
-  const form = document.createElement(`form`);
-  const projectNameLabel = document.createElement("label");
-  const projectName = document.createElement("input");
-  const createBtn = document.createElement("button");
-
-  projectNameLabel.innerText = `Create a new project:`;
-  createBtn.innerText = `Create`;
-
-  form.appendChild(projectNameLabel);
-  form.appendChild(projectName);
-  form.appendChild(createBtn);
-  main.appendChild(form);
+function addProject() {
+  let name = document.querySelector(`input[inputProject]`).value;
+  let project = {
+    projectName: `${name}`,
+    todos: [],
+  };
+  projects.push(project);
 }
 
-function createTodoForm() {
-  const form = document.createElement(`form`);
-  const inputTitle = document.createElement("input");
-  const inputDescription = document.createElement("input");
-  const inputDueDate = document.createElement("input");
+function displayTodos() {
+  for (let project of projects) {
+    const main = document.querySelector(`main`);
+    const projectDivContainer = document.createElement("div");
+    const projectHeader = document.createElement(`h2`);
+    const table = tableCreation();
 
-  const selectPriority = document.createElement("select");
-  const optionHigh = document.createElement(`option`);
-  const optionMedium = document.createElement(`option`);
-  const optionLow = document.createElement(`option`);
+    projectHeader.innerText = project.projectName;
+    projectDivContainer.setAttribute(`project`, `"${project.projectName}"`);
+    for (let todo of project.todos) {
+      let row = document.createElement(`tr`);
+      let tdName = completeElement(`td`, `${todo.title}`);
+      let tdDescription = completeElement(`td`, `${todo.description}`);
+      let tdDueDAte = completeElement(`td`, `${todo.dueDate}`);
+      let tdPriority = completeElement(`td`, `${todo.priority}`);
+      row.append(tdName, tdDescription, tdDueDAte, tdPriority);
+      table.append(row);
+    }
 
-  const inputTitleLabel = document.createElement("label");
-  const inputDescriptionLabel = document.createElement("label");
-  const inputDueDateLabel = document.createElement("label");
-  const selectPriorityLabel = document.createElement("label");
-  const addBtn = document.createElement("button");
+    projectDivContainer.appendChild(projectHeader);
+    projectDivContainer.appendChild(table);
 
-  inputTitleLabel.innerText = `Title`;
-  inputDescriptionLabel.innerText = `Description`;
-  inputDueDateLabel.innerText = `Due Date`;
-  selectPriorityLabel.innerText = `Priority`;
-  optionHigh.value = `high`;
-  optionHigh.innerText = `high`;
-  optionMedium.value = `medium`;
-  optionMedium.innerText = `medium`;
-  optionLow.value = `low`;
-  optionLow.innerText = `low`;
+    main.appendChild(projectDivContainer);
+  }
+}
 
-  addBtn.innerText = `Add`;
+function tableCreation(
+  nameValue,
+  descriptionValue,
+  dueDatevalue,
+  priorityValue,
+) {
+  const table = document.createElement(`table`);
+  const row = document.createElement(`tr`);
+  const headerName = completeElement(`th`, `Name`);
+  const headerDescription = completeElement(`th`, `Description`);
+  const headerDueDate = completeElement(`th`, `Due date`);
+  const headerPriority = completeElement(`th`, `Priority`);
+  row.append(headerName, headerDescription, headerDueDate, headerPriority);
+  table.append(row);
+  return table;
+}
 
-  selectPriority.appendChild(optionHigh);
-  selectPriority.appendChild(optionMedium);
-  selectPriority.appendChild(optionLow);
-  form.appendChild(inputTitleLabel);
-  form.appendChild(inputTitle);
-  form.appendChild(inputDescriptionLabel);
-  form.appendChild(inputDescription);
-  form.appendChild(inputDueDateLabel);
-  form.appendChild(inputDueDate);
-  form.appendChild(selectPriorityLabel);
-  form.appendChild(selectPriority);
-  form.appendChild(addBtn);
-  main.appendChild(form);
+function completeElement(name, value) {
+  let result = document.createElement(`${name}`);
+  result.innerText = value;
+  return result;
 }
 
 createProjectForm();
 createTodoForm();
-addProject(`House chores`);
+displayTodos();
+
+export { addProject, completeElement, projects };
+
+//things to do
+//update the select element to show the new projects when the create boton is presss
